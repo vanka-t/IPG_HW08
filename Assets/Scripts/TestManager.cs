@@ -3,22 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
+
+
 public class TestManager : MonoBehaviour
 {
+    [SerializeField]
+    ChatGPTExample example;
+
     string url1 = "https://jsonplaceholder.typicode.com/todos/1"; //basic
-    //https://www.reddit.com/r/todayilearned.json
+    
     //jsonplaceholder.typicode.com/todos/1
 
     string url2 = "https://jsonplaceholder.typicode.com/comments";//longer jsons script
 
     string url3 = "https://www.justice.gov/api/v1/blog_entries.json?amp%3Bpagesize=2"; // departament of justice - blog entries!
 
+
+   // public static string emailTest;
+
     // Start is called before the first frame update
     void Start()
     {
         //StartCoroutine(GetJsonFromUrl(url1, ReceivedJson1));
-       // StartCoroutine(GetJsonFromUrl(url2, ReceivedJson2));
-        StartCoroutine(GetJsonFromUrl(url3, ReceivedJson3));
+       StartCoroutine(GetJsonFromUrl(url2, ReceivedJson2));
+        //StartCoroutine(GetJsonFromUrl(url3, ReceivedJson3));
     }
 
     IEnumerator GetJsonFromUrl(string url, System.Action<string> callback)
@@ -58,7 +66,7 @@ public class TestManager : MonoBehaviour
        // print(jsonTextReceived); //pastes raw json file
 
         JsonReceiver1 receiver = JsonUtility.FromJson<JsonReceiver1>(jsonTextReceived);
-        print(receiver.userId + "\n" + receiver.title);
+       // print(receiver.userId + "\n" + receiver.title);
         receiver.id += 1;//becomes peoper data from the game instead of one long stream -- separated data basically
 
     }
@@ -72,24 +80,29 @@ public class TestManager : MonoBehaviour
 
         Comment[] comments = receiver.comments;
 
-        foreach(Comment comment in comments)
-        {
-            print(comment.email + " : " + comment.body);
-        }
+        //foreach(Comment comment in comments)
+        //{
+        //    print(comment.email + " : " + comment.body);
+
+
+        //}
+
+       // emailTest = comments[0].email;
+        //example.StartChatGPT(); //trigger awake event from chatgpt script
     }
 
-    void ReceivedJson3(string jsonTextReceived)
-    {
-       // jsonTextReceived = "{\"results\":" + jsonTextReceived + "}";
-        JusticeJSONReceiver receiver = JsonUtility.FromJson<JusticeJSONReceiver>(jsonTextReceived);
+    //void ReceivedJson3(string jsonTextReceived)
+    //{
+    //   // jsonTextReceived = "{\"results\":" + jsonTextReceived + "}";
+    //    JusticeJSONReceiver receiver = JsonUtility.FromJson<JusticeJSONReceiver>(jsonTextReceived);
 
-        Result[] results = receiver.results;
+    //    Result[] results = receiver.results;
 
-       foreach (Result result in results)
-        {
-            print("In "+  result.date + ", " + result.title + " . Basically..." + result.body);
-        }
+    //   foreach (Result result in results)
+    //    {
+    //        print("In "+  result.date + ", " + result.title + " . Basically..." + result.body);
+    //    }
 
 
-    }
+    //}
 }

@@ -3,12 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using ChatGPTWrapper;
 using TMPro;
+using UnityEngine.SceneManagement;
+
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance; //making it a singleton
     [SerializeField]
     ChatGPTConversation chatGPT;
+    [SerializeField]
+    GameSettings gameSettings;
+    [SerializeField]
+    PersonalityDatabase personDB;
+
 
     //UI Elements
     [SerializeField]
@@ -20,7 +27,12 @@ public class GameManager : MonoBehaviour
 
     string npcName = "NAme";
     string playerName = "Vanessa";
+    private string currentScene;
 
+    private Scene scene;
+    //background music
+    public AudioSource Source;
+    public AudioClip elevatorMusic, toggleMusic1, toggleMusic2, toggleMusic3;
 
     // Start is called before the first frame update
     void Awake()
@@ -29,13 +41,21 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
         }
+        // sets characters personality based on whats picked on the menu scene
+        chatGPT._initialPrompt = personDB.personalities[gameSettings.selectedIndex].initialPrompt;
+        //chatGPT._initialPrompt = "";
+
+        npcName = personDB.personalities[gameSettings.selectedIndex].name;
 
         chatGPT.Init();
+        Source = GetComponent<AudioSource>();
     }
 
     private void Start()
     {
         chatGPT.SendToChatGPT("{\"player_said\":"+ "\"Hello! Who are you?\"}");
+
+       
     }
     // Update is called once per frame
     void Update()
@@ -44,6 +64,13 @@ public class GameManager : MonoBehaviour
         {
             SubmitChatMessage();
         }
+
+
+       // BackgroundMusic();
+        //if (!Source.isPlaying)
+        //{
+        //    Source.Play();
+        //}
     }
 
 
@@ -105,4 +132,24 @@ public class GameManager : MonoBehaviour
         iF_PlayerTalk.text = "";
 
     }
+
+    ////changing music depending on scene
+    //public void BackgroundMusic()
+    //{
+
+
+    //    currentScene = SceneManager.GetActiveScene().name;
+
+
+    //    if (currentScene == "MenuScene") {
+    //        Source.clip = elevatorMusic;
+
+    //    } else
+    //    {
+    //        Source.clip = toggleMusic1;
+    //    }
+           
+
+    //}
+
 }

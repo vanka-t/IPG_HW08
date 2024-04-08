@@ -30,9 +30,9 @@ public class ChatGPTExample : MonoBehaviour
             instance = this;
         }
 
+
         //Enable ChatGPT
         chatGPT.Init();
-
     }
 
     private void Start()
@@ -69,4 +69,17 @@ public class ChatGPTExample : MonoBehaviour
 	{
         iF_PlayerTalk.text = "";
     }
+
+    //public void StartChatGPT()
+    //{
+    //   // string testPrompt = ;
+    //    print(TestManager.emailTest);
+    //    string finalPrompt = "this is my email: ", TestManager.emailTest;
+    //    chatGPT._initialPrompt = finalPrompt;
+    //    //Enable ChatGPT
+    //    chatGPT.Init();
+    //    chatGPT.SendToChatGPT("Hello! Let's begin!");
+    //}
+
+
 }
